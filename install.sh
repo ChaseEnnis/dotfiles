@@ -57,10 +57,10 @@ else
 fi
 
 non_sudo() {
-    bash ~/dotfiles/git.sh
-    bash ~/dotfiles/ssh.sh
-    bash ~/dotfiles/aws.sh
-    bash ~/dotfiles/vim.sh
+    bash ~/dotfiles/scripts/git.sh
+    bash ~/dotfiles/scripts/ssh.sh
+    bash ~/dotfiles/scripts/aws.sh
+    bash ~/dotfiles/scripts/vim.sh
 }
 
 export -f non_sudo
