@@ -1,14 +1,10 @@
 #!/bin/bash
 
 
-git () {
+gitsetup () {
 
 # Ensure script is executed in the dotfiles directory
 cd "$(dirname "$0")"
-
-# Install necessary packages
-sudo apt update
-sudo apt install -y git vim
 
 # Symbolic link for gitconfig
 ln -sf "$(pwd)/.gitconfig" ~/.gitconfig
@@ -45,4 +41,4 @@ echo "Git Setup complete."
 
 }
 
-git
+gitsetup
