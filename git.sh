@@ -16,14 +16,17 @@ ln -sf "$(pwd)/.bashrc" ~/.bashrc
 ln -sf "$(pwd)/authorized_keys" ~/.ssh/config
 
 # Install Vim plugins
-mkdir -p ~/.vim/pack/plugins/start
-cd ~/.vim/pack/plugins/start
 
-# Plugin for changing default color scheme
-git clone https://github.com/altercation/vim-colors-solarized.git
+# Check if ~/.vim/pack/plugins/start directory exists
+    if [ ! -d ~/.vim/pack/plugins/start ]; then
+        mkdir -p ~/.vim/pack/plugins/start
+    fi
+# Change directory to ~/.vim/pack/plugins/start
+    cd ~/.vim/pack/plugins/start || exit
 
-# Plugin for file explorer (NERDTree)
-git clone https://github.com/preservim/nerdtree.git
+    # Install Vim plugins
+    git clone https://github.com/altercation/vim-colors-solarized.git
+    git clone https://github.com/preservim/nerdtree.git
 
 # Set up git configuration
 git config --global user.name "Chase Ennis"

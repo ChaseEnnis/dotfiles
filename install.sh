@@ -3,7 +3,7 @@
 # Check if running as root
 if [[ "$(id -u)" -eq 0 ]]; then
     echo "Script is running as root"
-    
+
     # Check if apt is available
     if command -v apt &>/dev/null; then
         echo "apt is installed, proceeding with package installation..."
@@ -28,33 +28,40 @@ if [[ "$(id -u)" -eq 0 ]]; then
         echo "apt is not available. Please install packages manually."
         exit 1
     fi
+
     
-    # Anaconda installation
-    if [[ -e $(ls Anaconda3*.sh 2>/dev/null | head -1) ]]; then
-        echo "Anaconda installer found, running it..."
-        # Uncomment the following lines to install Anaconda
-        # bash Anaconda3-2024.02-1-Linux-x86_64.sh -b -p ~/anaconda3
-        # echo "export PATH=\$PATH:~/anaconda3/bin" >> ~/.bashrc
-    else
-        echo "Downloading Anaconda installer..."
-        # Uncomment the following lines to download Anaconda
-        # curl -O https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
-        # bash Anaconda3-2024.02-1-Linux-x86_64.sh -b -p ~/anaconda3
-        # echo "export PATH=\$PATH:~/anaconda3/bin" >> ~/.bashrc
-    fi
+
+
+
+# Anaconda installation
+	if [[ -d "$HOME/anaconda3" ]]; then
+    		echo "Anaconda is already installed."
+	else
+    		if [[ -e $(ls Anaconda3*.sh 2>/dev/null | head -1) ]]; then
+        		echo "Anaconda installer found, running it..."
+        		bash Anaconda3-2024.02-1-Linux-x86_64.sh -b -p ~/anaconda3
+        		echo "export PATH=\$PATH:~/anaconda3/bin" >> ~/.bashrc
+			rm Anaconda3-2024.02-1-Linux-x86_64.sh -b -p ~/anaconda3
+    	else
+        	echo "Downloading Anaconda installer..."
+       		curl -O https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
+        	bash Anaconda3-2024.02-1-Linux-x86_64.sh -b -p ~/anaconda3
+        	echo "export PATH=\$PATH:~/anaconda3/bin" >> ~/.bashrc
+    		rm Anaconda3-2024.02-1-Linux-x86_64.sh -b -p ~/anaconda3
+		fi
+	fi
+
 else
     echo "Script is not running as root, exiting..." >&2
     exit 1
 fi
 
-# Function for regular user tasks
-regularUser() {
+non_sudo() {
     bash ~/dotfiles/git.sh
+    bash ~/dotfiles/ssh.sh
+    bash ~/dotfiles/aws.sh
+    bash ~/dotfiles/vim.sh
 }
 
-# Export the function for use in the user's context
-export -f regularUser
-
-# Run the regular user tasks as the original user
-su "$SUDO_USER" -c "regularUser"
-
+export -f non_sudo
+su "$SUDO_USER" -c "non_sudo" 
