@@ -1,0 +1,8 @@
+[user]
+	name = Chase Ennis
+	email = ennis.18@wright.edu
+[core]
+	editor = vim
+	excludesfile = /home/chaseennis/.gitignore_global
+[help]
+	autocorrect = 1

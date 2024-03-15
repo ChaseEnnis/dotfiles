@@ -1,21 +1,60 @@
+#!/bin/bash
 
-#/bin/bash
-
-# check if effective user id is 0 (root)
-
-if [[ -n "$(id -u)" -eq 0 ]]; then
-	echo "Script is running as root"
-	# check if apt is package manager
-	# if apt is package manager and you run which apt it will specify a path to where its stored
-	
-	if [[ "$(which apt)" ]]; then
-   		 echo "apt is installed exactly as specified."
-	else
-    		 echo "apt is not installed at the specified location."
-	fi
-	# install packages with apt
-
+# Check if running as root
+if [[ "$(id -u)" -eq 0 ]]; then
+    echo "Script is running as root"
+    
+    # Check if apt is available
+    if command -v apt &>/dev/null; then
+        echo "apt is installed, proceeding with package installation..."
+        apt update
+        apt install -y \
+            nmap \
+            git \
+            sl \
+            ninvaders \
+            dnsutils \
+            libgl1-mesa-glx \
+            libegl1-mesa \
+            libxrandr2 \
+            libxrandr2 \
+            libxss1 \
+            libxcursor1 \
+            libxcomposite1 \
+            libasound2 \
+            libxi6 \
+            libxtst6
+    else
+        echo "apt is not available. Please install packages manually."
+        exit 1
+    fi
+    
+    # Anaconda installation
+    if [[ -e $(ls Anaconda3*.sh 2>/dev/null | head -1) ]]; then
+        echo "Anaconda installer found, running it..."
+        # Uncomment the following lines to install Anaconda
+        # bash Anaconda3-2024.02-1-Linux-x86_64.sh -b -p ~/anaconda3
+        # echo "export PATH=\$PATH:~/anaconda3/bin" >> ~/.bashrc
+    else
+        echo "Downloading Anaconda installer..."
+        # Uncomment the following lines to download Anaconda
+        # curl -O https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
+        # bash Anaconda3-2024.02-1-Linux-x86_64.sh -b -p ~/anaconda3
+        # echo "export PATH=\$PATH:~/anaconda3/bin" >> ~/.bashrc
+    fi
 else
-	echo "Script is not running as root, exiting..." 1>&2
-	exit 1
+    echo "Script is not running as root, exiting..." >&2
+    exit 1
 fi
+
+# Function for regular user tasks
+regularUser() {
+    bash ~/dotfiles/git.sh
+}
+
+# Export the function for use in the user's context
+export -f regularUser
+
+# Run the regular user tasks as the original user
+su "$SUDO_USER" -c "regularUser"
+
