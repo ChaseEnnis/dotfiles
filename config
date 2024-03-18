@@ -1,2 +1,17 @@
-Host fry.cs.wright.edu
-    HostName fry.cs.wright.edu
+Host fry
+	User w120cxe
+	HostName fry.cs.wright.edu
+	IdentityFile /home/chaseennis/.ssh/id_ed25519
+	Port 22
+Host ceg3120
+	User ubuntu
+	HostName 34.233.249.20
+	IdentityFile /home/chaseennis/.ssh/ceg3120.pem
+Host proxy
+	User ubuntu
+	HostName 44.209.167.83
+	IdentityFile /home/chaseennis/.ssh/ceg3120.pem
+Host ceg2410
+	User ubuntu
+	HostName 3.226.234.210
+	IdentityFile /home/chaseennis/.ssh/ceg2410.pem

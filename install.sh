@@ -61,6 +61,7 @@ non_sudo() {
     bash ~/dotfiles/scripts/ssh.sh
     bash ~/dotfiles/scripts/aws.sh
     bash ~/dotfiles/scripts/vim.sh
+    bash ~/dotfiles/scripts/bashrc.sh
 }
 
 export -f non_sudo
