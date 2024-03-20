@@ -8,17 +8,17 @@ if [ ! -d ~/.ssh ]; then
 fi
 
 # Copy the ~/.ssh/authorized_keys file to the repository
-cp ~/.ssh/authorized_keys ~/dotfiles/authorized_keys
+cp ~/.ssh/authorized_keys ~/dotfiles/ssh/authorized_keys
 
 # Symbolically link ~/.ssh/authorized_keys to the repository
-ln -sf ~/dotfiles/authorized_keys ~/.ssh/authorized_keys
+ln -sf ~/dotfiles/ssh/authorized_keys ~/.ssh/authorized_keys
 
 # Create ~/.ssh/config file with an entry for fry.cs.wright.edu
 echo 'Host fry.cs.wright.edu' >> ~/.ssh/config
 echo '    HostName fry.cs.wright.edu' >> ~/.ssh/config
 
 # Symbolically link ~/.ssh/config to the repository
-ln -sf ~/dotfiles/config ~/.ssh/config
+ln -sf ~/dotfiles/ssh/config ~/.ssh/config
 
 echo "SSH setup complete."
 
